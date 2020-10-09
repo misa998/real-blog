@@ -36,6 +36,24 @@ public class User {
 			CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,})
 	private List<Post> posts;
 	
+//	@OneToMany(mappedBy="username", cascade= {CascadeType.DETACH, 
+//			CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,})
+//	private List<Authorities> authorities;
+//	
+//	public void addAuthorities(Authorities auth) {
+//		if(auth == null) {
+//			authorities = new ArrayList<>();
+//		}
+//		authorities.add(auth);
+//		auth.setUsername(this);
+//	}
+//	
+//	public List<Authorities> getAuthorities() {
+//		return authorities;
+//	}
+//	public void setAuthorities(List<Authorities> authorities) {
+//		this.authorities = authorities;
+//	}
 	public UserDetails getUserDetails() {
 		return userDetails;
 	}
