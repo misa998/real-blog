@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.PUT, "/api/users/**").hasAnyRole("MANAGER", "ADMIN")
 		.antMatchers(HttpMethod.PUT, "/api/users").hasAnyRole("MANAGER", "ADMIN")
 		.antMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
+		
 		.antMatchers(HttpMethod.GET, "/api/posts").hasAnyRole("MANAGER", "EMPLOYEE", "ADMIN")
 		.antMatchers(HttpMethod.GET, "/api/posts/**").hasAnyRole("MANAGER", "EMPLOYEE", "ADMIN")
 		.antMatchers(HttpMethod.POST, "/api/posts").hasAnyRole("MANAGER", "ADMIN")
@@ -43,10 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.PUT, "/api/posts/**").hasAnyRole("MANAGER", "ADMIN")
 		.antMatchers(HttpMethod.PUT, "/api/posts").hasAnyRole("MANAGER", "ADMIN")
 		.antMatchers(HttpMethod.DELETE, "/api/posts/**").hasRole("ADMIN")
+		
+		.antMatchers(HttpMethod.GET, "/").hasRole("EMPLOYEE")
 //		.anyRequest().authenticated()
 //		.anyRequest().denyAll()
 //		.and().httpBasic()
-//		.and().anonymous().disable();
+//		.and().anonymous().disable()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
