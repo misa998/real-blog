@@ -45,12 +45,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.PUT, "/api/posts").hasAnyRole("MANAGER", "ADMIN")
 		.antMatchers(HttpMethod.DELETE, "/api/posts/**").hasRole("ADMIN")
 		
-		.antMatchers(HttpMethod.GET, "/").hasRole("EMPLOYEE")
+		.antMatchers("/").anonymous()
+		.antMatchers("/registration").anonymous()
+		
+		.antMatchers("/login").anonymous()
 //		.anyRequest().authenticated()
 //		.anyRequest().denyAll()
 //		.and().httpBasic()
 //		.and().anonymous().disable()
 		.and().csrf().disable()
+		.formLogin().permitAll()
+		.and().logout().permitAll()
+		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
