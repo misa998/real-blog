@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.misa.realblog.entity.User;
 import com.misa.realblog.entity.UserDetails;
@@ -31,7 +32,8 @@ public class UserDAOImpl implements UserDAO {
 	public User saveOrUpdate(UserDTO userDTO) {
 		System.out.println(userDTO);
 		Session session = entityManager.unwrap(Session.class);
-//		if(findByEmail(userDTO.getEmail()) != null) {
+		User user2 = findByEmail(userDTO.getEmail());
+		if(StringUtils.isEmpty(user2)) {
 			User user = new User();
 			user.setUserDetails(new UserDetails("None", "None", 150));
 			user.setEmail(userDTO.getEmail());
@@ -43,9 +45,9 @@ public class UserDAOImpl implements UserDAO {
 			session.saveOrUpdate(user);
 			
 			return user;
-//		}else {
-//			throw new UserAlreadyExistException("Already exist");
-//		}
+		}else {
+			throw new UserAlreadyExistException("Already exist");
+		}
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
 		Session session = entityManager.unwrap(Session.class);
 		Query<User> query = session.createQuery("from User where email=:email", User.class);
 		query.setParameter("email", email);
-		User user = null;
+		User user = new User();
 		try {
 			user = query.getSingleResult();
 		} catch (Exception e) {

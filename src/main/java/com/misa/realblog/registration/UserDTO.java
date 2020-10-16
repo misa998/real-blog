@@ -24,10 +24,9 @@ public class UserDTO {
 	@NotEmpty
 	private String matchingPasswords;
 	
-	@NotEmpty
-	@Size(min = 11, message = "{Size.userDto.email}")
+//	@NotEmpty
 	@ValidEmail
-	@Email
+//	@Email
 	private String email;
 	
 	public String getUserName() {
