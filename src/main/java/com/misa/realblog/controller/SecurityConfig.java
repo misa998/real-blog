@@ -45,19 +45,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.PUT, "/api/posts").hasAnyRole("MANAGER", "ADMIN")
 		.antMatchers(HttpMethod.DELETE, "/api/posts/**").hasRole("ADMIN")
 		
-		.antMatchers("/").anonymous()
-		.antMatchers("/registration").anonymous()
-		
-		.antMatchers("/login").anonymous()
+		.antMatchers("/").hasRole("EMPLOYEE")
+
 //		.anyRequest().authenticated()
-//		.anyRequest().denyAll()
-//		.and().httpBasic()
+		.and().httpBasic()
 //		.and().anonymous().disable()
 		.and().csrf().disable()
-		.formLogin().permitAll()
-		.and().logout().permitAll()
-		.and()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		
+		.formLogin().loginPage("/login").permitAll()
+		.and().logout().permitAll();
+//		.and()
+//		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
 	@Bean

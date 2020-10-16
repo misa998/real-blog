@@ -1,26 +1,33 @@
 package com.misa.realblog.registration;
 
-
-import javax.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+//import javax.validation.constraints.Email;
+//import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@FieldMatch.List({
+    @FieldMatch(first = "password", second = "matchingPasswords", message = "The password fields must match")
+})
 @PasswordMatches
 // data transfer object
 public class UserDTO {
 	
-	@NotNull
-	@Size(min = 1, message = "{Size.userDto.userName}")
+//	@Size(min = 1, message = "{Size.userDto.userName}")
+	@NotEmpty
 	private String userName;
 	
-	@NotNull
-	@Size(min = 1)
+	@NotEmpty
+//	@Size(min = 1)
 	private String password;
+	@NotEmpty
 	private String matchingPasswords;
 	
-	@NotNull
-	@Size(min = 1, message = "{Size.userDto.email}")
+	@NotEmpty
+	@Size(min = 11, message = "{Size.userDto.email}")
 	@ValidEmail
+	@Email
 	private String email;
 	
 	public String getUserName() {
@@ -47,7 +54,9 @@ public class UserDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-
+	@Override
+	public String toString() {
+		return "UserDTO [userName=" + userName + ", password=" + password + ", matchingPasswords=" + matchingPasswords
+				+ ", email=" + email + "]";
+	}
 }

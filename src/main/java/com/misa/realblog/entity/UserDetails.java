@@ -3,6 +3,9 @@ package com.misa.realblog.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="user_details")
@@ -25,6 +30,7 @@ public class UserDetails {
 	@Column(name="age")
 	private int age;
 	
+	@Enumerated(EnumType.STRING)
 	@OneToOne(mappedBy="userDetails", cascade=CascadeType.ALL)
 	private User user;
 
@@ -66,6 +72,11 @@ public class UserDetails {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public UserDetails(String firstName, String lastName, int age) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
 	}
 
 	public UserDetails(int id, String firstName, String lastName, int age, User user) {

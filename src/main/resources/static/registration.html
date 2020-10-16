@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration</title>
+<link rel="stylesheet"
+ href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+ crossorigin="anonymous">
+</head>
+<body>
+	<form action="/registration" th:object="${user}" method="POST" enctype="utf8">
+		<div>
+			<label th:text="#{label.user.userName}">userName</label>
+			<input th:field="*{userName}"/>
+			<!-- <p th:each="error: ${#fields.errors('firstName')}" 
+	          th:text="${error}">Validation error</p> -->
+		</div>
+		<div>
+			<label th:text="#{label.user.password}">password</label>
+			<input th:field="*{password}"/>
+			<!-- <p th:each="error: ${#fields.errors('firstName')}" 
+	          th:text="${error}">Validation error</p> -->
+		</div>
+		<div>
+			<label th:text="#{label.user.matchingPasswords}">matchingPasswords</label>
+			<input th:field="*{matchingPasswords}"/>
+			<!-- <p th:each="error: ${#fields.errors('firstName')}" 
+	          th:text="${error}">Validation error</p> -->
+		</div>
+		<div>
+			<label th:text="#{label.user.email}">email</label>
+			<input th:field="*{email}"/>
+			<!-- <p th:each="error: ${#fields.errors('firstName')}" 
+	          th:text="${error}">Validation error</p> -->
+		</div>
+		<button type="submit" th:text="#{label.form.submit}">submit</button>
+	</form>
+	
+	<a th:href="@{/login}" th:text="#{label.form.loginLink}">login</a>
+</body>
+</html>

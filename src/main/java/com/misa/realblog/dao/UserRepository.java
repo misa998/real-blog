@@ -25,19 +25,21 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	* List<User> findAll();
 	**/
 	
-	@Query("select username from #{#entityName} username where username.email = ?1")
-	User findByEmailAddress(String email);
-	
-	@Query("select id from #{#entityName} id where id.userName = :userName or id.email = :email")
-	User findByLastnameOrFirstname(@Param("email") String email,
-	                                 @Param("userName") String username);
+//	@Query("select username from #{#entityName} username where username.email = ?1")
+//	User findByEmailAddress(String email);
+//	
+//	@Query("select id from #{#entityName} id where id.userName = :userName or id.email = :email")
+//	User findByLastnameOrFirstname(@Param("email") String email,
+//	                                 @Param("userName") String username);
 	
 //	User save(User user);
 	
-	User registerNewUserAccount(UserDTO userDto);
+//	User registerNewUserAccount(UserDTO userDto);
 	 
 	
 //	@Query("SELECT f FROM Users f WHERE LOWER f.username = :username or f.email = :email")
 //	User findByUsername(@Param("username") String username,
 //			@Param("email") String email);
+	
 }
+
