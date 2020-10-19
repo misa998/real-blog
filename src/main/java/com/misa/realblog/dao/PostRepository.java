@@ -9,7 +9,5 @@ import com.misa.realblog.entity.Post;
 
 @RepositoryRestResource(path="posts")
 public interface PostRepository extends JpaRepository<Post, Integer> {
-	
-	public Post findByTitle(String title);
 
 }

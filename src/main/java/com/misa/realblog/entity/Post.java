@@ -27,7 +27,7 @@ public class Post {
 	@Column(name="body")
 	private String body;
 	
-	@Enumerated(EnumType.STRING)
+//	@Enumerated(EnumType.STRING)
 	@ManyToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE, 
 			CascadeType.PERSIST, CascadeType.REFRESH,})
 	@JoinColumn(name="user")
@@ -65,8 +65,7 @@ public class Post {
 		this.user = user;
 	}
 
-	public Post(int id, String title, String body, User user) {
-		this.id = id;
+	public Post(String title, String body, User user) {
 		this.title = title;
 		this.body = body;
 		this.user = user;

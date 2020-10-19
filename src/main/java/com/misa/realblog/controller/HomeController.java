@@ -18,30 +18,39 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.misa.realblog.dao.UserAlreadyExistException;
+import com.misa.realblog.entity.Post;
 import com.misa.realblog.entity.User;
 import com.misa.realblog.registration.UserDTO;
+import com.misa.realblog.service.PostService;
 import com.misa.realblog.service.UserService;
 
 @Controller
-public class HomeController {
-//	@Autowired
-//	private UserRepositoryImpl ur;
-	
+public class HomeController {	
 	private UserService userService;
+	private PostService postService;
 	
 	@Autowired
-	public HomeController(UserService userService) {
+	public HomeController(UserService userService, PostService postService) {
 		this.userService = userService;
+		this.postService = postService;
 	}
 		
-	@GetMapping("/")
+	@GetMapping("/allUsers")
 	public String homePage(Model model) {
 		List<User> users = userService.findAll();
-		User user = userService.findById(15);
-		System.out.println(user.getUserName());
+		
 		model.addAttribute("users", users);
 		return "index";
 	}
+	
+	@GetMapping("/allPosts")
+	public String postsPage(Model model) {
+		List<Post> posts = postService.findAll();
+		
+		model.addAttribute("posts", posts);
+		return "indexPosts";
+	}
+
 
 	@GetMapping("/registration")
 	public String showRegistrationPage(WebRequest wr, Model model) {
@@ -50,24 +59,7 @@ public class HomeController {
 		return "registration";
 	}
 	
-	/**
-	@PostMapping("/registration")
-	public ModelAndView registerUserAccount(
-			@ModelAttribute("user") @Valid UserDTO userDTO, 
-			HttpServletRequest request, Errors errors) {
-		System.out.println(userDTO);
-		
-		try {
-			User registeredUser = userService.saveOrUpdate(userDTO);
-//			final User registeredUser = ur.registerNewUserAccount(userDTO);
-		} catch (final UserAlreadyExistException e) {
-			ModelAndView mav = new ModelAndView("registration", "user", userDTO);
-			mav.addObject("message", "An account for that username/email already exists");
-			return mav;
-		}
-		return new ModelAndView("success", "user", userDTO);
-	}
-	**/
+
 	@PostMapping("/registration")
 	public String showSuccess(@ModelAttribute("user") @Valid UserDTO user, BindingResult br) {
 		try {
