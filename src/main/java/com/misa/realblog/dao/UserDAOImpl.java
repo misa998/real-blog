@@ -1,17 +1,21 @@
 package com.misa.realblog.dao;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.jaas.AuthorityGranter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.misa.realblog.entity.Authorities;
 import com.misa.realblog.entity.User;
 import com.misa.realblog.entity.UserDetails;
 import com.misa.realblog.registration.UserDTO;
@@ -40,7 +44,8 @@ public class UserDAOImpl implements UserDAO {
 			user.setUserName(userDTO.getUserName());
 			String pass = passEncoder.encode(userDTO.getPassword());
 			user.setPassword(pass);
-					
+			user.addAuthorities(new Authorities());
+			
 			System.out.println(user);
 			session.saveOrUpdate(user);
 			

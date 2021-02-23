@@ -1,11 +1,15 @@
 package com.misa.realblog.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,24 +43,27 @@ public class User {
 			CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,})
 	private List<Post> posts;
 	
-//	@OneToMany(mappedBy="username", cascade= {CascadeType.DETACH, 
-//			CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,})
-//	private List<Authorities> authorities;
-//	
-//	public void addAuthorities(Authorities auth) {
-//		if(auth == null) {
-//			authorities = new ArrayList<>();
-//		}
-//		authorities.add(auth);
-//		auth.setUsername(this);
-//	}
-//	
-//	public List<Authorities> getAuthorities() {
-//		return authorities;
-//	}
-//	public void setAuthorities(List<Authorities> authorities) {
-//		this.authorities = authorities;
-//	}
+	@Enumerated(EnumType.STRING)
+	@OneToMany(mappedBy="username", cascade= CascadeType.ALL)
+	private Set<Authorities> authorities;
+
+	public void addAuthorities(Authorities auth) {
+		if(auth == null) {
+			authorities = new HashSet<>();
+		}
+		if(auth != null) {
+			auth.setUsername(this);
+			authorities.add(auth);
+		}
+	}
+	
+	public Set<Authorities> getAuthorities() {
+		return authorities;
+	}
+	public void setAuthorities(Set<Authorities> authorities) {
+		this.authorities = authorities;
+	}
+	
 	public UserDetails getUserDetails() {
 		return userDetails;
 	}
@@ -107,6 +114,7 @@ public class User {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", email=" + email
 				+ ", userDetails=" + userDetails + ", posts=" + posts + "]";
 	}
+	
 	public User(int id, String userName, String password, String email, UserDetails userDetails, List<Post> posts) {
 		this.id = id;
 		this.userName = userName;
@@ -115,7 +123,9 @@ public class User {
 		this.userDetails = userDetails;
 		this.posts = posts;
 	}
+	
 	public User() {
+		addAuthorities(null);
 	}
 	
 	

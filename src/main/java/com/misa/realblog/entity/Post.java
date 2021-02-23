@@ -1,5 +1,7 @@
 package com.misa.realblog.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,12 +28,21 @@ public class Post {
 	private String title;
 	@Column(name="body")
 	private String body;
+	@Column(name="date")
+	private Date date = new Date();
 	
-//	@Enumerated(EnumType.STRING)
 	@ManyToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE, 
 			CascadeType.PERSIST, CascadeType.REFRESH,})
 	@JoinColumn(name="user")
 	private User user;
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public int getId() {
 		return id;
@@ -65,9 +76,11 @@ public class Post {
 		this.user = user;
 	}
 
-	public Post(String title, String body, User user) {
+	public Post(int id, String title, String body, Date date, User user) {
+		this.id = id;
 		this.title = title;
 		this.body = body;
+		this.date = date;
 		this.user = user;
 	}
 
